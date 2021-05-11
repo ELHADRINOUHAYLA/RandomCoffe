@@ -1,0 +1,113 @@
+     {% extends 'accounts/hpmain.html' %}
+     {% load static %}
+     {% block content %}
+
+        <!-- LANDING PAGE -->
+
+        <div class="landing">
+            <div class="landingText" data-aos="fade-up" data-aos-duration="1000">
+                <h1>Grab your Coffee.<span style="color:#e0501b;font-size: 4vw"> make a friend.</span> </h1>
+                <h3>Connect now and match with your <br>work-mates <br> for a nice cup of Coffee.</h3>
+                <div class="btn">
+                    <a href="{% url 'register'%}">Sing-up now</a>
+                </div>
+            </div>
+            <div class="landingImage" data-aos="fade-down" data-aos-duration="2000">
+                <img src="{% static 'images/AndroidPNG.png' %} " alt="">
+            </div>
+        </div>
+
+        <!-- ABOUT SECTION -->
+
+        <div class="about">
+            <div class="aboutText" data-aos="fade-up" data-aos-duration="1000">
+                <h1>Why <br> <span style="color:#2f8be0;font-size:3vw">RandomCoffee?</span> </h1>
+                <img src="{% static 'images/undraw.png' %}" alt="">
+            </div>
+            <div class="aboutList" data-aos="fade-left" data-aos-duration="1000">
+                <ol>
+                    <li> 
+                        <span>01</span>
+                         <p>There is no better thing than to feel comfortable around your co-workers.</p>
+                    </li>
+                    <li> 
+                        <span>02</span>
+                         <p>Employees from different departments are matched up randomly to get to know one another over a cup of coffee also they get to exchange experiences.</p>
+                    </li>
+                    <li> 
+                        <span>03</span>
+                         <p>Most of the poeple who are successful in their are sociable and know many connections.</p>
+                    </li>
+                    <li> 
+                        <span>04</span>
+                         <p>To be a profitable company, investing in long-term employee experience programs is a must</p>
+                    </li>
+
+                </ol>
+            </div>
+        </div>
+
+        <!-- INFO SECTION -->
+
+        <div class="infoSection">
+            <div class="infoHeader" data-aos="fade-up" data-aos-duration="1000">
+                <h1> RandomCoffee can build  <br> <span style="color:#e0501b">Strong human-to-human relationships.</span> </h1>
+            </div>
+            <div class="infoCards">
+                <div class="card one" data-aos="fade-up" data-aos-duration="1000">
+                    <img src="{% static 'images/movie.png' %}" class="cardoneImg" alt="" data-aos="fade-up" data-aos-duration="1100">
+                    <div class="cardbgone"></div>
+                    <div class="cardContent">
+                        <h2 class="s1">720</h2>
+                        <p>Over 720 people signed up for their first coffee encounter with a random colleague!</p>
+                        
+                    </div>
+                </div>
+                <div class="card two" data-aos="fade-up" data-aos-duration="1300">
+                    <img src="{% static 'images/learn.png'%} " class="cardtwoImg" alt="" data-aos="fade-up" data-aos-duration="1200">
+                    <div class="cardbgtwo"></div>
+                    <div class="cardContent">
+                                
+                        <h2 class="s1">300</h2>
+                        <p>More than 300 meetings have taken place since the app was built</p>
+                        
+                    </div>
+                </div>
+                <div class="card three" data-aos="fade-up" data-aos-duration="1600">
+                    <img src="{% static 'images/videocall.png' %}" class="cardthreeImg" alt="" data-aos="fade-up" data-aos-duration="1300">
+                    <div class="cardbgone"></div>
+                    <div class="cardContent">
+                        <h2 class="s1">2000</h2>
+                        <p>Have fun video calling your friends or family this Quarantine!</p>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- BANNER AND FOOTER -->
+            
+              
+
+        <div class="footer">
+            <h2>RandomCoffe, Built with ❤️</h2>
+           <p>&copy;Copyright, EBF-RandomCoffee 2021&copy;</p>
+        </div>
+    </div>
+<script >
+    $(document).ready(function(){
+ 
+$(".s1").counterUp({
+       delay: 10,
+       time: 1200
+});
+    });
+</script>
+   <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+            AOS.init();
+
+    </script>
+   
+{% endblock %}
