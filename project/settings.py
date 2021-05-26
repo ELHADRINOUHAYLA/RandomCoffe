@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-1hdx=k6i!xj1tb(ueombsr6tz*^lb@1=5%3^ajnh5$f8ypd&tq
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 # Application definition
 
@@ -38,7 +38,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    'accounts',
+    'accounts',  #app
+
+    'crispy_forms',
 ]
 
 MIDDLEWARE = [
@@ -128,6 +130,7 @@ STATICFILES_DIRS = [
   BASE_DIR / "static",
 
 ]
+MEDIA_ROOT = BASE_DIR/"static/images"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
@@ -135,10 +138,10 @@ STATICFILES_DIRS = [
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # email settings
-
-EMAIL_HOST = 'localhost'
-EMAIL_PORT = '1025'
-EMAIL_HOST_USER = ''
-EMAIL_HOST_PASSWORD = ''
-EMAIL_USE_TLS = False
-# EMAIL_USE_SSL = False 
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'nohaila1999elhadri@gmail.com'
+EMAIL_HOST_PASSWORD = 'zxynzkllhdpqndcs'
+EMAIL_USE_TLS = True
+EMAIL_USE_SSL = False

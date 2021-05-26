@@ -1,5 +1,5 @@
 <style>
-	.nav{
+.nav{
     position: fixed;
     z-index: 1000;
     top: 0;
@@ -22,6 +22,7 @@
     font-size: 16px;
     font-weight: 600;
     color: #000;
+
 }
 
 .nav .links .mainlink{
@@ -57,11 +58,11 @@
             </div>
             <div class="links">
                 <a href="{% url 'homepage' %}" class="mainlink">RandomCoffee</a>
-                <a href="">About</a>
+                <a href="{% url 'about' %}">About</a>
                 <a href="{% url 'contact'%}">Contact Us</a>
             </div>
             <div class="btn login-btn">
-                    <a href="{% url 'login'%}">Login</a>
+                    <a href="{% url 'login'%}">Login <i class="fa fa-sign-out" aria-hidden="true"></i></a>
                 </div>
         </div>
     </div>

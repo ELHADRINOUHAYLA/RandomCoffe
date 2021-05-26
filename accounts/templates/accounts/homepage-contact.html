@@ -9,10 +9,14 @@
             </div>
             <form action="{% url 'contact' %}" method="post">
             	{% csrf_token %}
-                <h3>Drop Us a Message</h3>
-                <center><h2>Thanks {{ message_name}}!</h2>
+                      <h3>Drop Us a Message</h3>
+            	{% if message_name %}
+
+                <div style="text-align: center;"><h2>Thanks {{ message_name}}!</h2>
                        <p>We Received your email and will respond shortly...</p>
-                </center>
+                <img src="{% static 'images/checkmark.png' %}">
+                </div>
+                {% else %}
                <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
@@ -33,7 +37,9 @@
                    
                 </div>
             </form>
+
 </div>
+         {% endif %}
 
     
      <style>
