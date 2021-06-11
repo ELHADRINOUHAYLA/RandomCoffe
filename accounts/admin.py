@@ -7,3 +7,7 @@ from .models import *
 admin.site.register(UserProfile)
 admin.site.register(Review)
 admin.site.register(Skill)
+admin.site.register(PersonalSkill)
+admin.site.register(FreeDate)
+admin.site.register(MeetingPlace)
+admin.site.register(Employe)

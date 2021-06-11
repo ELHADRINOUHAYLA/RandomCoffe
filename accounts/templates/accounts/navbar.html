@@ -2,26 +2,38 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title></title>
+    <title></title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     </head>
 <body>
 
 
-<div class="wrapper">
-        <div class="nav1">
-            <div class="logo">
-                <h4>#RandomCoffee.</h4>
-            </div>
-            <div class="links">
-                <a href="{% url 'home' %}" class="mainlink">RandomCoffee</a>
-                <a href="{% url 'users_profile' %}">Users</a>
-                <a href="{% url 'profile' %}">Profile</a>
-                <a href="{% url 'admin_users' %}">Admin Users</a>
-            </div>
-            
- <div class="profile_pic">
+
+
+
+
+
+
+<nav class="navbar navbar-expand-lg navbar-custom">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">#RandomCoffee</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"><i class="fa fa-bars"></i></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+      <div class="navbar-nav">
+        <a class="nav-link active" aria-current="page" href="{% url 'home' %}">RandomCoffee</a>
+        <a class="nav-link" href="{% url 'users_profile' %}">Users</a>
+        <a class="nav-link" href="{% url 'profile' %}">Profile</a>
+        <a class="nav-link" href="{% url 'starred_users' %}">Starred Users</a>
+        {% if request.user.is_superuser %}
+        <a class="nav-link " href="{% url 'admin_users' %}" >Admin Users</a>
+         {% endif %}
+      </div>
+    </div>
+  </div>
+   <div class="profile_pic">
     <ul>
         <li class="nav-item dropdown">
 
@@ -36,38 +48,37 @@
           <span style="color: black; font-size: 14px;  font-weight: 600;">Hi,{{request.user}}</span>
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-          <a class="dropdown-item" href="#">Dashboard</a>
+          <a class="dropdown-item" href="{% url 'change_password' %}">Change Password</a>
           <a class="dropdown-item" href="{% url 'edit_profile' %}">Edit Profile</a>
           <a class="dropdown-item" href="{% url 'logout' %}">Log Out</a>
         </div>
       </li>   
     </ul>
   </div>
-        </div>
-    </div>
+</nav>
 </body>
 <style>
+
+.navbar-brand{
+    font-weight: bold;
+    color: black;
+    font-size: 30px;
+
+
+}
+.navbar-custom {
+            background-color: white;
+        }
+.nav-link{
+    color: black;
+    
+}
+
 .profile_pic ul{
     list-style:  none;
 }
 
-	.nav1{
-    position: fixed;
-    z-index: 1000;
-    top: 0;
-    right: 0;
-    left: 0;
-    height: 80px;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0 25px 0 25px;
-    background-color: #fff;
-
-    border-bottom-left-radius: 10px;
-    border-bottom-right-radius: 10px;
-}
+    
 
 .nav1 .links a{
     text-decoration: none;
@@ -76,20 +87,15 @@
     font-weight: 600;
     color: #000;
 }
-.nav1 .links a:hover{
-    color: #e0501b;
+@media screen and (max-width: 600px) {
+.profile_pic{
+    margin-left: -12%;
 }
+      
 
-.nav1 .links .mainlink{
-    color: #e0501b;
+
+
 }
-
-.nav1 h4{
-    font-size: 22px;
-    font-weight: bold;
-    margin-left: 25px;
-}
-
-
 </style>
-</html>
+
+</html> 

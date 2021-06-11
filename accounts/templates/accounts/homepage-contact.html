@@ -3,90 +3,181 @@
      {% block content %}
 
      
-    <div class="container contact-form">
-            <div class="contact-image">
-                <img src="https://image.ibb.co/kUagtU/rocket_contact.png" alt="rocket_contact"/>
+
+     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" rel="stylesheet">
+<div class="container" data-aos="fade-down" data-aos-duration="2000" >
+    <div class="contact__wrapper shadow-lg mt-n9">
+        <div class="row no-gutters">
+            <div class="col-lg-5 contact-info__wrapper gradient-brand-color p-5 order-lg-2">
+                <h3 class="color--white mb-5">Get in Touch</h3>
+    
+                <ul class="contact-info__list list-style--none position-relative z-index-101">
+                    <li class="mb-4 pl-4">
+                        <span class="position-absolute"><i class="fas fa-envelope"></i></span> Support@RandomCoffee.com
+                    </li>
+                    <li class="mb-4 pl-4">
+                        <span class="position-absolute"><i class="fas fa-phone"></i></span> (+212)-624-2900-32
+                    </li>
+                    <li class="mb-4 pl-4">
+                        <span class="position-absolute"><i class="fas fa-map-marker-alt"></i></span> 61, Quartier Industriel
+                        <br>  Sidi Ghanem Route Safi À côté de la Mouqataâa،
+                        <br> Marrakech 40000
+    
+                        <div class="mt-3">
+                            <a href="https://goo.gl/maps/X7MRUim3HHBa61tk6" target="_blank" class="text-link link--right-icon text-white">Get directions <i class="link__icon fa fa-directions"></i></a>
+                        </div>
+                    </li>
+                </ul>
+    
+                
             </div>
-            <form action="{% url 'contact' %}" method="post">
-            	{% csrf_token %}
-                      <h3>Drop Us a Message</h3>
-            	{% if message_name %}
+    
+            <div class="col-lg-7 contact-form__wrapper p-5 order-lg-1">
+                <form action="{% url 'contact' %}" method="post" class="contact-form form-validate" novalidate="novalidate">
+                    {% csrf_token %}
 
-                <div style="text-align: center;"><h2>Thanks {{ message_name}}!</h2>
-                       <p>We Received your email and will respond shortly...</p>
-                <img src="{% static 'images/checkmark.png' %}">
+
+                    {% if firstname %}
+                      <div style="text-align: center;"><h2 data-aos="fade-down" data-aos-duration="2000">Thanks {{firstname}}  {{lastname}}!</h2>
+                       <p data-aos="fade-down" data-aos-duration="2000">We Received your email and will respond shortly...</p>
+                <img data-aos="fade-down" data-aos-duration="2000" src="{% static 'images/checkmark.png' %}">
                 </div>
+
                 {% else %}
-               <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <input type="text" name="name" class="form-control" placeholder="Your Name *" value="" />
+
+
+                    <div class="row">
+                        <div class="col-sm-6 mb-3">
+                            <div class="form-group">
+                                <label class="required-field" for="firstName">First Name</label>
+                                <input type="text" class="form-control" id="firstName" name="firstName" placeholder="Ahmed">
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <input type="text" name="email" class="form-control" placeholder="Your Email *" value="" />
+    
+                        <div class="col-sm-6 mb-3">
+                            <div class="form-group">
+                                <label for="lastName">Last Name</label>
+                                <input type="text" class="form-control" id="lastName" name="lastName" placeholder="malek">
+                            </div>
                         </div>
-                         <div class="col-md-6">
-                        <div class="form-group">
-                            <textarea name="message" class="form-control" placeholder="Your Message *" style="margin-left: 120%; width: 360px"></textarea>
+    
+                        <div class="col-sm-6 mb-3">
+                            <div class="form-group">
+                                <label class="required-field" for="email">Email</label>
+                                <input type="text" class="form-control" id="email" name="email" placeholder="example@example.com">
+                            </div>
                         </div>
-                       </div>
-                        <div class="form-group">
-                            <input type="submit" name="btnSubmit" class="btnContact" value="Send Message" />
+    
+                        <div class="col-sm-6 mb-3">
+                            <div class="form-group">
+                                <label for="phone">Phone Number</label>
+                                <input type="tel" class="form-control" id="phone" name="phone" placeholder="(+212)-6454-545-89">
+                            </div>
                         </div>
+    
+                        <div class="col-sm-12 mb-3">
+                            <div class="form-group">
+                                <label class="required-field" for="message">How can we help?</label>
+                                <textarea class="form-control" id="message" name="message" rows="4" placeholder="Hi there, I would like to....."></textarea>
+                            </div>
+                        </div>
+    
+                        <div class="col-sm-12 mb-3">
+                            <button type="submit" name="submit" class="btn btn-primary" onclick="validateForm();">Send</button>
+                        </div>
+                           <div class="status"></div>
                     </div>
-                   
-                </div>
-            </form>
+                </form>
+            </div>
+            <!-- End Contact Form Wrapper -->
 
+        </div>
+    </div>
 </div>
-         {% endif %}
+
+{% endif %}
+                   
+         
 
     
-     <style>
-  .contact-form{
-    background: #fff;
-    margin-top: 10%;
-    margin-bottom: 5%;
-    width: 70%;
-}
-.contact-form .form-control{
-    border-radius:1rem;
-    margin-left: 55%;
-    
 
-}
-.contact-image{
-    text-align: center;
-}
-.contact-image img{
-    border-radius: 6rem;
-    width: 11%;
-    margin-top: -5%;
-    transform: rotate(29deg);
-}
-.contact-form form{
-    padding: 14%;
-}
-.contact-form form .row{
-    margin-bottom: -7%;
-}
-.contact-form h3{
-    margin-bottom: 8%;
-    margin-top: -16%;
-    text-align: center;
-    color: #0062cc;
-}
-.contact-form .btnContact {
-	margin-left: 200px;
-    width: 50%;
-    border: none;
-    border-radius: 1rem;
-    padding: 1.5%;
-    background: #dc3545;
-    font-weight: 600;
+
+    <style>
+ .gradient-brand-color {
+    background-image: -webkit-linear-gradient(0deg, #2f8be0 0%, #6470ef 100%);
+    background-image: -ms-linear-gradient(0deg, #2f8be0 0%, #6470ef 100%);
     color: #fff;
-    cursor: pointer;
+}
+.contact-info__wrapper {
+    overflow: hidden;
+    border-radius: .625rem .625rem 0 0
 }
 
-     </style>
+@media (min-width: 1024px) {
+    .contact-info__wrapper {
+        border-radius: 0 .625rem .625rem 0;
+        padding: 5rem !important
+    }
+}
+.contact-info__list span.position-absolute {
+    left: 0
+}
+.z-index-101 {
+    z-index: 101;
+}
+.list-style--none {
+    list-style: none;
+}
+.contact__wrapper {
+    background-color: #fff;
+    border-radius: 0 0 .625rem .625rem
+}
+
+@media (min-width: 1024px) {
+    .contact__wrapper {
+        border-radius: .625rem 0 .625rem .625rem
+    }
+}
+@media (min-width: 1024px) {
+    .contact-form__wrapper {
+        padding: 5rem !important
+    }
+}
+.shadow-lg, .shadow-lg--on-hover:hover {
+    box-shadow: 0 1rem 3rem rgba(132,138,163,0.1) !important;
+}
+</style>
+<script>
+    function validateForm() {
+  var name =  document.getElementById('firstName').value;
+  if (name == "") {
+      document.querySelector('.status').innerHTML = "Name cannot be empty";
+      return false;
+  }
+  var email =  document.getElementById('email').value;
+  if (email == "") {
+      document.querySelector('.status').innerHTML = "Email cannot be empty";
+      return false;
+  } else {
+      var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+      if(!re.test(email)){
+          document.querySelector('.status').innerHTML = "Email format invalid";
+          return false;
+      }
+  }
+  var message =  document.getElementById('message').value;
+  if (message == "") {
+      document.querySelector('.status').innerHTML = "Message cannot be empty";
+      return false;
+  }
+  document.querySelector('.status').innerHTML = "Sending...";
+}
+</script>
+        
+     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+            AOS.init();
+
+    </script>
+
       {% endblock %}

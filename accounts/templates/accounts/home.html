@@ -1,4 +1,131 @@
+
+
 {% extends 'accounts/main.html' %}
+
+{% load static %}
+{% block title %}Home{% endblock %}
 {% block content %}
-<a href="{% url 'random' %}"><button>Random</button></a>
+
+<div class="container" style="margin-left: 20px;">
+<div class="row">
+  <div class="profile-nav col-md-3">
+      <div class="panel">
+          <div class="user-heading round">
+              <a href="#">
+                 {% if request.user.userprofile.profile_image %}
+                            <img src="{{request.user.userprofile.profile_image.url}}" alt=""/>
+                            {% else %}
+                             <img src="{% static 'images/profile.png' %}" alt=""/>
+                             {% endif %}
+              </a>
+              <h1>{{request.user.last_name}} {{request.user.first_name}}</h1>
+              <p>deydey@theEmail.com</p>
+          </div>
+
+          <ul class="nav nav-pills nav-stacked">
+              <li class="active"><a href="{% url 'profile' %}"> <i class="fa fa-user"></i> Profile</a></li>
+              <li><a href="#"> <i class="fa fa-calendar"></i> Recent Activity </a></li>
+              <li><a href="#"> <i class="fa fa-cog"></i>Settings</a></li>
+              <li><a href="#"> <i class="fa fa-sign-out"></i> Logout </a></li>
+          </ul>
+      </div>
+  </div>
+  <div class="profile-info col-md-9">
+  <h2>Are you Ready for your Random Coffee this week? choose your free date now so we can match you with someone! <a href="{% url 'free_date' %}">get matched now!</a></h2>
+
+  {% for u in freedate %}
+     <p>your free day and time : {{u.user}} - {{u.FreeDay}} - {{u.FreeTime}}</p>
+{% endfor %}
+     {% if matched_user == request.user%}
+       <p>{{message}}</p>
+       {% else %}
+     <p>Your match is <a href="{% url 'user_profile' matched_user.id %}">@{{matched_user.user}}</a></p>
+       {% endif %}
+      </div>
+    </div>
+<style>
+  .profile-nav, .profile-info{
+    margin-top:30px;   
+}
+
+.profile-nav .user-heading {
+    background: rgb(2,0,36);
+    background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(33,129,250,1) 0%, rgba(0,212,255,1) 100%);
+    color: #fff;
+    border-radius: 4px 4px 0 0;
+    -webkit-border-radius: 4px 4px 0 0;
+    padding: 30px;
+    text-align: center;
+}
+
+.profile-nav .user-heading.round a  {
+
+    border-radius: 50%;
+    -webkit-border-radius: 50%;
+    border: 10px solid rgba(255,255,255,0.3);
+    display: inline-block;
+}
+
+.profile-nav .user-heading a img {
+    width: 112px;
+    height: 112px;
+    border-radius: 50%;
+    -webkit-border-radius: 50%;
+}
+
+.profile-nav .user-heading h1 {
+    font-size: 22px;
+    font-weight: 300;
+    margin-bottom: 5px;
+}
+
+.profile-nav .user-heading p {
+    font-size: 12px;
+}
+
+.profile-nav ul {
+    margin-top: 1px;
+    display: block;
+}
+
+.profile-nav ul > li {
+    border-bottom: 1px solid #ebeae6;
+    margin-top: 0;
+    line-height: 50px;
+}
+
+.profile-nav ul > li:last-child {
+    border-bottom: none;
+}
+
+.profile-nav ul > li{
+    border-radius: 0;
+    -webkit-border-radius: 0;
+    color: #89817f;
+    border-left: 5px solid #fff;
+}
+
+.profile-nav ul > li > a{
+  margin-left: 5px;
+  color: #89817f;
+}
+
+.profile-nav ul > li:hover, .profile-nav ul > li:focus, .profile-nav ul li.active{
+    background: #f8f7f5 !important;
+    border-left: 5px solid #2181fa;
+    color: #89817f !important;
+}
+
+.profile-nav ul > li:last-child > a:last-child {
+    border-radius: 0 0 4px 4px;
+    -webkit-border-radius: 0 0 4px 4px;
+}
+
+.profile-nav ul > li > a > i{
+    font-size: 16px;
+    padding-right: 10px;
+    color: #bcb3aa;
+}
+</style>
+
 {%  endblock %}

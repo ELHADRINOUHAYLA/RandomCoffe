@@ -2,18 +2,39 @@
      {% load static %}
      {% block content %}
 
+
+
+
+ 
+
+     <!--alert message for reset password-->
+
+     {% if messages %}
+    {% for message in messages%}
+
+<div class="container">
+ 
+ <div class="alert alert-success alert-dismissible fade show" role="alert">
+  <strong>{{message}}</strong>
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+
+</div>
+{% endfor %}
+{% endif %}
+   
         <!-- LANDING PAGE -->
 
         <div class="landing">
             <div class="landingText" data-aos="fade-up" data-aos-duration="1000">
                 <h1>Grab your Coffee.<span style="color:#e0501b;font-size: 4vw"> make a friend.</span> </h1>
                 <h3>Connect now and match with your <br>work-mates <br> for a nice cup of Coffee.</h3>
-                <div class="btn">
+                <div class="btn login-btn">
                     <a href="{% url 'register'%}">Sing-up</a>
                 </div>
             </div>
             <div class="landingImage" data-aos="fade-down" data-aos-duration="2000">
-                <img src="{% static 'images/AndroidPNG.png' %} " alt="">
+                <img src="{% static 'images/getting_coffee.svg' %} " alt="">
             </div>
         </div>
 
@@ -55,30 +76,30 @@
             </div>
             <div class="infoCards">
                 <div class="card one" data-aos="fade-up" data-aos-duration="1000">
-                    <img src="{% static 'images/movie.png' %}" class="cardoneImg" alt="" data-aos="fade-up" data-aos-duration="1100">
+                    <img src="{% static 'images/hangout.svg' %}"  class="cardoneImg" alt="" data-aos="fade-up" data-aos-duration="1100">
                     <div class="cardbgone"></div>
                     <div class="cardContent">
-                        <h2 class="s1">720</h2>
-                        <p>Over 720 people signed up for their first coffee encounter with a random colleague!</p>
+                        <h2 class="s1">72</h2>
+                        <p>Over 72 people signed up for their first coffee encounter with a random colleague!</p>
                         
                     </div>
                 </div>
                 <div class="card two" data-aos="fade-up" data-aos-duration="1300">
-                    <img src="{% static 'images/learn.png'%} " class="cardtwoImg" alt="" data-aos="fade-up" data-aos-duration="1200">
+                    <img src="{% static 'images/meeting.svg'%} " class="cardtwoImg" alt="" data-aos="fade-up" data-aos-duration="1200">
                     <div class="cardbgtwo"></div>
                     <div class="cardContent">
                                 
-                        <h2 class="s1">300</h2>
-                        <p>More than 300 meetings have taken place since the app was built</p>
+                        <h2 class="s1">30</h2>
+                        <p>More than 30 meetings have taken place since the app was built</p>
                         
                     </div>
                 </div>
                 <div class="card three" data-aos="fade-up" data-aos-duration="1600">
-                    <img src="{% static 'images/videocall.png' %}" class="cardthreeImg" alt="" data-aos="fade-up" data-aos-duration="1300">
+                    <img src="{% static 'images/co_working.svg' %}" class="cardthreeImg" alt="" data-aos="fade-up" data-aos-duration="1300">
                     <div class="cardbgone"></div>
                     <div class="cardContent">
                         <h2 class="s1">2000</h2>
-                        <p>Have fun video calling your friends or family this Quarantine!</p>
+                        <p>Company with more than 2000 employes! made the connection between its worker strong even more with RandomCoffee❤️  </p>
                         
                     </div>
                 </div>
@@ -94,6 +115,9 @@
             <h2>RandomCoffe, Built with ❤️</h2>
            <p>&copy;Copyright, EBF-RandomCoffee 2021&copy;</p>
         </div>
+}
+}
+}
     </div>
 <script >
     $(document).ready(function(){

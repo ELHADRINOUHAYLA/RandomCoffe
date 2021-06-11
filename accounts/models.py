@@ -16,10 +16,47 @@ class Skill(models.Model):
         return self.name
     
 
+class PersonalSkill(models.Model):
+    name = models.CharField(max_length=200, null=True)
+    
+    def __str__(self):
+        return self.name
 
 
+DAY_CHOICES = [
+    (1, 'Monday'),
+    (2, 'Tuesday'),
+    (3, 'Wednesday'),
+    (4, 'Thursday'),
+    (5, 'Friday'),
+    (6, 'Saturday'),
+    (7, 'Sunday'),
+]
+
+TIME_CHOICES = [
+    (1, '8AM-10AM'),
+    (2, '10AM-12PM'),
+    (3, '12PM-2PM'),
+    (4, '2PM-4PM'),
+    (5, '4PM-6PM'),
+    (6, '6PM-8PM'),
+]
 
 
+class FreeDate(models.Model):
+    FreeDay = models.PositiveSmallIntegerField(choices=DAY_CHOICES)
+    FreeTime = models.PositiveSmallIntegerField(choices=TIME_CHOICES)
+    user = models.OneToOneField(User, null=True, on_delete=models.CASCADE)
+    def __str__(self):
+        return self.user.username
+    
+
+
+class MeetingPlace(models.Model):
+    CoffeeName = models.CharField(max_length=200, null=True)
+    Address = models.CharField(max_length=200, null=True)
+    def __str__(self):
+        return self.CoffeeName
 
 class UserProfile(models.Model):
     GENDER=(
@@ -38,6 +75,9 @@ class UserProfile(models.Model):
     about = models.TextField(null=True)
     desired_user = models.ManyToManyField("self")
     skill = models.ManyToManyField("Skill")
+    personalskill = models.ManyToManyField("PersonalSkill")
+
+    
     
 
     def __str__(self):
@@ -67,4 +107,5 @@ class Review(models.Model):
 
 
     
-
+class Employe(models.Model):
+    Ref = models.CharField(max_length=200, null=True)

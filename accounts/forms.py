@@ -5,11 +5,14 @@ from django import forms
 from .models import *
 
 
-
+class DateInput(forms.DateInput):
+     input_type = 'date'
+     
 class CreateUserForm(UserCreationForm):
+    error_css_class = 'error'
     class Meta:
         model = User
-        fields = ['username','email','password1','password2']
+        fields = ['username', 'first_name', 'last_name', 'email', 'password1', 'password2']
 
 
 
@@ -17,7 +20,10 @@ class ProfileForm(ModelForm):
     class Meta:
         model = UserProfile
         fields = '__all__'
-        exclude = ['user', 'desired_user']
+        exclude = ['user', 'desired_user', 'personalskill']
+        widgets = {
+            'birthdate': DateInput(),
+        }
 
 
 class UserForm(ModelForm):
@@ -30,6 +36,15 @@ class UserForm(ModelForm):
 
 
 
+class PersonalSkillForm(ModelForm):
+    
+    class Meta:
+        model = PersonalSkill 
+        fields = '__all__'
+
+    
+
+
 
 class RateForm(forms.ModelForm):
     text = forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control'}), required=False)
@@ -37,3 +52,10 @@ class RateForm(forms.ModelForm):
     class Meta:
         model = Review
         fields = ('text', 'rate')
+
+
+
+class FreeDateForm(forms.ModelForm):
+    class Meta:
+        model = FreeDate
+        fields = ('FreeDay', 'FreeTime')
