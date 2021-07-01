@@ -55,8 +55,8 @@
                 <input type="password" class="form-control" id="password" name="password" placeholder="password"> 
                 
               </div>
-              
-              <div class="mb-4 d-grid px-3"> <button type="submit" class="btn btn-primary btn-block btn-signup text-uppercase"> <span>Login</span> </button> </div>
+              <small class="foloat-right py-3 showPasswordToggle" style="margin-left:90%;">SHOW</small>
+              <div class="mb-4 d-grid"> <button type="submit" class="btn btn-primary btn-block btn-signup text-uppercase"> <span>Login</span> </button> </div>
               
             </form>
             <div class="mb-4" style="margin-left:60%;"><a href="/password_reset">Forgot password?</a></div>
@@ -71,8 +71,39 @@
       </div>
     </div>
   </div>
+    <script>
+      const passwordField = document.querySelector("#password");
+      const showPasswordToggle = document.querySelector(".showPasswordToggle");
 
-  
+      const handleToggleInput = (e) =>{
+        if(showPasswordToggle.textContent === "SHOW"){
+          showPasswordToggle.textContent = "HIDE";
+          passwordField.setAttribute("type", "text");
+
+        }else{
+          showPasswordToggle.textContent = "SHOW";
+          passwordField.setAttribute("type", "password");
+        }
+      };
+     
+
+     showPasswordToggle.addEventListener("click", handleToggleInput);
+
+
+
+
+    </script>
+     <style>
+       .showPasswordToggle{
+        cursor: pointer;
+        transition: all;
+       }
+       .showPasswordToggle:hover{
+        
+        transform: scale(1.2);
+       }
+     
+     </style>
     <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.2/umd/popper.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.1/js/bootstrap.min.js"></script>

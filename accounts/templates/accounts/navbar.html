@@ -28,7 +28,9 @@
         <a class="nav-link" href="{% url 'profile' %}">Profile</a>
         <a class="nav-link" href="{% url 'starred_users' %}">Starred Users</a>
         {% if request.user.is_superuser %}
-        <a class="nav-link " href="{% url 'admin_users' %}" >Admin Users</a>
+        <a class="nav-link " href="{% url 'admin_users' %}" >Manage Users</a>
+        <a class="nav-link " href="{% url 'meeting' %}" >Manage Meetings</a>
+
          {% endif %}
       </div>
     </div>
@@ -45,11 +47,11 @@
                    <img src="{% static 'images/profile.png'%}" width="40" height="40" class="rounded-circle">
             {% endif %}
 
-          <span style="color: black; font-size: 14px;  font-weight: 600;">Hi,{{request.user}}</span>
+          <span class="txt">Hi,{{request.user}}</span>
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
           <a class="dropdown-item" href="{% url 'change_password' %}">Change Password</a>
-          <a class="dropdown-item" href="{% url 'edit_profile' %}">Edit Profile</a>
+          <a class="dropdown-item" href="{% url 'settings' %}">Settings</a>
           <a class="dropdown-item" href="{% url 'logout' %}">Log Out</a>
         </div>
       </li>   
@@ -58,7 +60,11 @@
 </nav>
 </body>
 <style>
-
+.txt{
+    color: black; 
+    font-size: 14px;  
+    font-weight: 600;
+}
 .navbar-brand{
     font-weight: bold;
     color: black;
@@ -67,7 +73,7 @@
 
 }
 .navbar-custom {
-            background-color: white;
+        background-color: white;
         }
 .nav-link{
     color: black;

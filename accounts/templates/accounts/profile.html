@@ -40,7 +40,7 @@
                                        {{request.user.userprofile.job_title}}
                                     </h6>
                                     {% if reviews_avg != NONE %}
-     <p class="proile-rating">RANKINGS : <span>{{reviews_avg}}/5</span> <button class="btn btn-link" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">Read
+     <p class="proile-rating">RANKINGS : <span>{{reviews_avg|floatformat:2}}/5💕</span> <button class="btn btn-link" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">Read
   </button>
 </p>
 <div class="collapse" id="collapseExample">

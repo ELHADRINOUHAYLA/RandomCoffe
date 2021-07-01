@@ -34,6 +34,12 @@ urlpatterns = [
     path('free_date/', views.Freedate, name="free_date"),
     path('ajax/validate_username/', views.validate_username, name='validate_username'),
     path('search-users', csrf_exempt(views.search_users), name="search_users"),
+    path('admin_meetings/', views.admin_meeting, name="meeting"),
+    path('settings/', views.settings, name="settings"),
+    path('delete-account/', views.delete_acc, name="delete_account"),
+    path('meeting_state/', views.MeetingState, name="meeting_state"),
+    path('email_sender/', views.Meeting_mail, name="email_sender"),
+    path('review_meeting/', views.ReviewMeeting, name="ReviewMeeting"), 
 
 
 

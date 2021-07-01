@@ -22,31 +22,31 @@ class PersonalSkill(models.Model):
     def __str__(self):
         return self.name
 
+FreeDay_CHOICES = (
+               ('Monday' , 'Monday'),
+               ('Tuesday', 'Tuesday'),
+               ('Wednesday', 'Wednesday'),
+               ('Thursday', 'Thursday'),
+               ('Friday', 'Friday'),
+               ('Saturday', 'Saturday'),
+               ('Sunday', 'Sunday'),
 
-DAY_CHOICES = [
-    (1, 'Monday'),
-    (2, 'Tuesday'),
-    (3, 'Wednesday'),
-    (4, 'Thursday'),
-    (5, 'Friday'),
-    (6, 'Saturday'),
-    (7, 'Sunday'),
-]
+           )
 
-TIME_CHOICES = [
-    (1, '8AM-10AM'),
-    (2, '10AM-12PM'),
-    (3, '12PM-2PM'),
-    (4, '2PM-4PM'),
-    (5, '4PM-6PM'),
-    (6, '6PM-8PM'),
-]
+TIME_CHOICES = (
+    ('8AM-10AM', '8AM-10AM'),
+    ('10AM-12PM', '10AM-12PM'),
+    ('12PM-2PM', '12PM-2PM'),
+    ('2PM-4PM', '2PM-4PM'),
+    ('4PM-6PM', '4PM-6PM'),
+    ('6PM-8PM', '6PM-8PM'),
+)
 
 
 class FreeDate(models.Model):
-    FreeDay = models.PositiveSmallIntegerField(choices=DAY_CHOICES)
-    FreeTime = models.PositiveSmallIntegerField(choices=TIME_CHOICES)
-    user = models.OneToOneField(User, null=True, on_delete=models.CASCADE)
+    FreeDay = models.CharField(max_length=200, null=True, choices=FreeDay_CHOICES)
+    FreeTime = models.CharField(max_length=200, null=True, choices=TIME_CHOICES)
+    user = models.ForeignKey(User, null=True, on_delete=models.CASCADE)
     def __str__(self):
         return self.user.username
     
@@ -109,3 +109,45 @@ class Review(models.Model):
     
 class Employe(models.Model):
     Ref = models.CharField(max_length=200, null=True)
+
+
+    def __str__(self):
+        return self.Ref
+
+
+
+STATE_CHOICES = [
+    ('Accepte', 'Accepte'),
+    ('Deny', 'Deny'),
+]
+RATE_MEETING = [
+    (1, '1'),
+    (2, '2'),
+    (3, '3'),
+    (4, '4'),
+    (5, '5'),
+    
+]
+
+class Match(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user', null=True)
+    state = models.CharField(max_length=200, null=True, choices=STATE_CHOICES)
+    text = models.TextField(max_length=3000, null=True, blank=True)
+    rate = models.PositiveSmallIntegerField(choices=RATE_MEETING, null=True, blank=True)
+
+    def __str__(self):
+        return self.user.username
+
+
+
+
+class Meeting(models.Model):
+    match1 = models.ForeignKey(Match,on_delete=models.CASCADE, related_name='match1', null=True)
+    match2 = models.ForeignKey(Match,on_delete=models.CASCADE, related_name='match2', null=True)
+    meeeting_place = models.ForeignKey(MeetingPlace, on_delete=models.CASCADE, null=True)
+    meeting_date = models.ForeignKey(FreeDate, null=True, on_delete=models.CASCADE)
+    mail_sent = models.BooleanField(default=False)
+
+
+
+

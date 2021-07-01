@@ -20,26 +20,26 @@ from django.db.models.query_utils import Q
 from django.utils.http import urlsafe_base64_encode
 from django.contrib.auth.tokens import default_token_generator
 from django.utils.encoding import force_bytes
-from django.http import JsonResponse
 
-from .forms import CreateUserForm, UserForm, ProfileForm, RateForm, PersonalSkillForm, FreeDateForm
+
+from .forms import CreateUserForm, UserForm, ProfileForm, RateForm, PersonalSkillForm, FreeDateForm, MatchForm
 from .models import *
 from random import choice
 
 from django.db.models import Avg
 import json
 from django.http import JsonResponse
+from django.core import serializers
 # -----------------------------------------------------------------
 
 def search_users(request):
     if request.method == 'POST':
-        user_p = get_user_model()
-        users = user_p.objects.all()
+        users = User.objects.all()
         search_str = json.loads(request.body).get('searchText')
         usersList = users.filter(
             first_name__istartswith=search_str) | users.filter(
             last_name__istartswith=search_str) | users.filter(
-            username__istartswith=search_str) 
+            username__istartswith=search_str)
         data = usersList.values()
         return JsonResponse(list(data), safe=False)
 
@@ -133,31 +133,40 @@ def contact(request):
 # -----------------------------------------------------------------
 @login_required(login_url='login')
 def home(request):
-    user_p = get_user_model()
-    users = user_p.objects.all()
-    freedate = FreeDate.objects.filter(user = request.user)
-    starreds = request.user.userprofile.desired_user.all()
-    message =" No much Found! Good Luck next Week"
-    matched_user = User
-
-    if starreds:
-        for u in starreds:
-            u_freedate = FreeDate.objects.filter(user=u.user)
-            for dates in freedate:
-                for matchdates in u_freedate:
-                    if dates.FreeTime == matchdates.FreeTime and dates.FreeDay == matchdates.FreeDay:
-                        matched_user = u
-
-    else:
-        for u in users:
-            u_freedate = FreeDate.objects.filter(user = u)
-            for dates in freedate:
-                for matchdates in u_freedate:
-                    if dates.FreeTime == matchdates.FreeTime and dates.FreeDay == matchdates.FreeDay:
-                        matched_user = u.userprofile
-
-
-    context = {'freedate': freedate, 'matched_user': matched_user, 'message':message}
+    form2 = MatchForm()
+    form = FreeDateForm()
+    match = Match()
+    n = 0
+    L = True
+    B = False
+    meetings = Meeting()
+    if Match.objects.filter(user=request.user):
+        match = Match.objects.filter(user=request.user)
+        for m in match:
+            meetings = Meeting.objects.filter(
+                         match1=m) | Meeting.objects.filter(
+                         match2=m)
+            for k in meetings:
+                if k.match1.state == "Accepte" and k.match2.state == "Accepte":
+                    B = True
+                if k.match1.state != "Accepte" and k.match1.state != "Deny":
+                    L = False
+            print(meetings)
+            n = meetings.count()
+            if n > 0:
+                L = True
+    form2 = MatchForm()
+    form = FreeDateForm()
+    if request.method == 'POST':
+        form = FreeDateForm(request.POST)
+        if form.is_valid():
+            form2 = form.save(commit=False)
+            form2.user = request.user 
+            form2.save()
+            return redirect('home')
+    print(B)
+    print(L)
+    context = {'form':form, 'meetings':meetings, 'n':n, 'B':B, 'form2':form2, 'L':L}
     return render(request, 'accounts/home.html', context)
 # -----------------------------------------------------------------
 @login_required(login_url='login')
@@ -210,7 +219,7 @@ def edit_profile(request):
             messages.success(request,('Your profile was successfully updated!'))
         else:
             messages.error(request,('Unable to complete request'))
-        return redirect ('profile')
+        return redirect ('settings')
     user_form = UserForm(instance=request.user)
     profile_form = ProfileForm(instance=request.user.userprofile)        
     context = {'user_form':user_form, 'profile_form': profile_form}
@@ -278,11 +287,12 @@ def remove_desireuser(request):
 @login_required(login_url='login')
 def user_profile(request, pk):
     user = UserProfile.objects.get(id=pk)
+    user_skills = user.personalskill.all()
     reviews = Review.objects.filter(user_reviewed=user)
     reviews_avg = reviews.aggregate(Avg('rate'))['rate__avg']
     reviews_count = reviews.count()
     skills = user.skill.all()
-    context = {'user': user, 'reviews_avg':reviews_avg, 'reviews_count':reviews_count, 'skills':skills}
+    context = {'user': user, 'reviews_avg':reviews_avg, 'reviews_count':reviews_count, 'skills':skills, 'user_skills':user_skills}
     return render(request, 'accounts/user_profile.html', context)
 # -----------------------------------------------------------------
 
@@ -354,7 +364,7 @@ def change_password(request):
             user = form.save()
             update_session_auth_hash(request, user)  # Important!
             messages.success(request, 'Your password was successfully updated!')
-            return redirect('change_password')
+            return redirect('settings')
         else:
             messages.error(request, 'Please correct the error below.')
     else:
@@ -424,3 +434,86 @@ def Skill(request):
     
     context = {'pform':pform}
     return render(request, 'accounts/add_skills.html', context)
+
+# -----------------------------------------------------------------
+
+
+def admin_meeting(request):
+    meetings = Meeting.objects.all()
+    n = meetings.count()
+    contexte = {'meetings':meetings, 'n':n}
+    return render(request, 'accounts/meetings.html', contexte)
+# -----------------------------------------------------------------
+
+
+def settings(request):
+    user_form = UserForm(instance=request.user)
+    profile_form = ProfileForm(instance=request.user.userprofile)
+    form = PasswordChangeForm(request.user)
+    contexte = {'user_form':user_form, 'profile_form':profile_form, 'form': form}
+    return render(request, 'accounts/Settings.html', contexte)
+
+# -----------------------------------------------------------------
+
+
+def delete_acc(request):
+    if request.method == 'POST':
+        user = request.user
+        user.delete()
+        return redirect('/')
+    contexte = {}
+    return render(request, 'accounts/delete_account.html', contexte)
+
+
+# -----------------------------------------------------------------
+def MeetingState(request):
+    match = Match.objects.get(user=request.user) 
+    if request.method == 'POST':
+        state = request.POST.get('state')
+        
+        match.state = state 
+        match.save()
+        return redirect('home')   
+    return render(request, 'accounts/home.html')
+
+# -----------------------------------------------------------------
+
+def Meeting_mail(request):
+    
+    meetings = Meeting.objects.all()
+    for m in meetings:
+        if m.mail_sent == False and m.match1.state == "Accepte" and m.match2.state == "Accepte":
+            
+            day = m.meeting_date.FreeDay
+            time = m.meeting_date.FreeTime
+            email1 = m.match1.user.email
+            email2 = m.match2.user.email
+            meeting_place = m.meeeting_place.CoffeeName
+            subject = "Congratulations!🎉✨ #RandomCoffee"
+            message_email = "Congratulations your match is ready to meet you this " + day + " at " + time + " in " + meeting_place + " Make sure you'll be there in time"
+            send_mail(
+            subject,  # subject
+            message_email,  # message
+            'nohaila1999elhadri@gmail.com',  # from email
+            [email1, email2],  # To Email
+           )
+            m.mail_sent = True
+            m.save()
+            return redirect('meeting')
+
+    return render(request, 'accounts/meetings.html')
+
+
+
+def ReviewMeeting(request):
+    match = Match.objects.get(user= request.user)
+    form2 = MatchForm()
+    if request.method == 'POST':
+        form2 = MatchForm(request.POST, instance=match)
+        if form2.is_valid():
+            form2.save()
+            return redirect('home')
+
+    context = {'form2':form2}
+    return render(request, 'accounts/reviewMeeting.html', context)
+

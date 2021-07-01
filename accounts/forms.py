@@ -59,3 +59,12 @@ class FreeDateForm(forms.ModelForm):
     class Meta:
         model = FreeDate
         fields = ('FreeDay', 'FreeTime')
+
+
+
+
+class MatchForm(forms.ModelForm):
+    text = forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control'}), required=False)
+    class Meta:
+        model = Match
+        fields = ('rate', 'text') 

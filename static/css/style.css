@@ -146,19 +146,23 @@ li span{
 }
 
 .infoCards .one .cardoneImg{
+    
     width: 180px;
     position: absolute;
-    right: -50px;
+    right: -5px;
 }
 .infoCards .two .cardtwoImg{
-    width: 150px;
+    
+     width: 230px;
+    /* margin-top: 20px; */
     position: absolute;
-    right: -50px;
+    right: -40px;
 }
 .infoCards .three .cardthreeImg{
-    width: 200px;
+    
+       width: 200px;
     position: absolute;
-    right: -50px;
+    right: -1px;
 }
 
 .cardbgone{
@@ -361,6 +365,4 @@ li p{
 .footer{
     padding-bottom: 40px;
 }
-
-
 
